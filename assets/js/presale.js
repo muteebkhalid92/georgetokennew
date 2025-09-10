@@ -285,6 +285,22 @@ async function buyTokens() {
 
 window.addEventListener("load", () => {
   init();
+
+  // Add event listener to update received tokens on payIn input change
+  const payInInput = document.getElementById("payInInput");
+  const receivedInInput = document.getElementById("receivedInInput");
+  if (payInInput && receivedInInput) {
+    payInInput.addEventListener("input", () => {
+      const value = parseFloat(payInInput.value);
+      if (!isNaN(value)) {
+        const tokens = value * 50000; // Use exact rate or fetch dynamically if needed
+        receivedInInput.value = tokens.toFixed(0);
+      } else {
+        receivedInInput.value = "0";
+      }
+    });
+  }
+
   const presaleSection = document.getElementById("presale-section");
   if (presaleSection) {
     presaleSection.scrollIntoView({ behavior: "smooth" });
