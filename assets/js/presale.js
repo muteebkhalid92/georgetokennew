@@ -94,8 +94,14 @@ async function connectWallet() {
     if (walletAddressDisplay) {
       walletAddressDisplay.innerText = selectedAccount;
     } else {
-      alert("Failed to connect wallet: Wallet address display element not found.");
-      return;
+      // Try alternative element id "walletAddress"
+      const altWalletAddressDisplay = document.getElementById("walletAddress");
+      if (altWalletAddressDisplay) {
+        altWalletAddressDisplay.innerText = selectedAccount;
+      } else {
+        alert("Failed to connect wallet: Wallet address display element not found.");
+        return;
+      }
     }
 
     const connectWalletBtn = document.getElementById("connectWalletBtn");
@@ -193,7 +199,7 @@ async function updateContractData() {
       console.warn("Failed to fetch BNB price, using fallback:", error);
     }
     const usdtRaised = (parseFloat(bnbRaised) * bnbPrice).toFixed(2);
-    const totalGoal = 130760;
+    const totalGoal = 450000;
     const percentage = Math.min((parseFloat(usdtRaised) / totalGoal) * 100, 100);
 
     // Dynamic Min/Max buy values
@@ -204,7 +210,7 @@ async function updateContractData() {
     // Fix: Check if elements exist before setting innerText or style
     const rateDisplay = document.getElementById("rateDisplay");
     if (rateDisplay) {
-      rateDisplay.innerText = rate.toString();
+      rateDisplay.innerText = rate.toFixed(0);
     }
 
     const maxBuyDisplay = document.getElementById("maxBuyDisplay");
